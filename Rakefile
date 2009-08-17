@@ -6,11 +6,10 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "tokyomapper"
     gem.summary = %Q{A succinct ORM for TokyoCabinet}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.description = %Q{TokyoMapper is a simple ORM for TokyoCabinet. Just 'include TokyoMapper' in your class and go! Requires the tokyocabinet-ruby bindings and the tokyocabinet package.}
     gem.email = "scottburton11@gmail.com"
     gem.homepage = "http://github.com/scottburton11/tokyomapper"
     gem.authors = ["Scott Burton"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
 rescue LoadError
