@@ -1,27 +1,29 @@
 = tokyomapper
 
-TokyoMapper is an extremely lightweight ORM for TokyoCabinet. It stuffs your instance variables into a .tdb row, and loads them into new instances on #find. Nothing fancy!
+TokyoMapper is an extremely lightweight ORM for TokyoCabinet. 
+
+It stuffs your instance variables into a .tdb row, and loads them into new instances on #find. Nothing fancy!
 
 == Example
 
 
-class Elephant
-  include TokyoMapper
+  class Elephant
+    include TokyoMapper
   
-  attr_accessor :trunk_length
+    attr_accessor :trunk_length
   
-  def initialize(params)
-    @trunk_length = params[:trunk_length]
-  end  
-end
+    def initialize(params)
+      @trunk_length = params[:trunk_length]
+    end  
+  end
 
-elephant = Elephant.new(:trunk_length => "Super Long")
-elephant.save
-#=> true
-# creates elephant.tdb unless it exists
+  elephant = Elephant.new(:trunk_length => "Super Long")
+  elephant.save
+  #=> true
+  # creates elephant.tdb unless it exists
 
-Elephant.all
-#=> [#<Elephant:0x18b8100 @trunk_length="Super Long"]
+  Elephant.all
+  #=> [#<Elephant:0x18b8100 @trunk_length="Super Long"]
 
 
 
