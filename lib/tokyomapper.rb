@@ -1,3 +1,5 @@
+require 'tokyocabinet'
+
 module TokyoMapper
   include TokyoCabinet
   
@@ -62,7 +64,17 @@ module TokyoMapper
   module InstanceMethods
         
     def save
-      self.class.connection { |db| db.put(db.genuid, self.class.stringify_keys(self.instance_values))}
+      self.class.connection do |db| 
+        db.put(db.genuid, self.class.stringify_keys(self.instance_values))
+      end
+    end
+    
+    def instance_values
+      instance_values_hash = Hash.new
+      instance_variables.each do |key|
+        instance_values_hash[key.instance_variable_name] = self.send(key.instance_variable_name.to_sym)
+      end
+      return instance_values_hash
     end
     
   end
@@ -70,6 +82,39 @@ module TokyoMapper
   def self.included(receiver)
     receiver.extend         ClassMethods
     receiver.send :include, InstanceMethods
+  end
+  
+end
+
+class String
+  def pluralize
+    case self
+    when %r|s$|
+      self << "es"
+    when %r|sh$|
+      self << "es"
+    when %r|e$|
+      self << "s"
+    when %r|o$|
+      self << "es"
+    when %r|[aeiou]+y$|
+      self << "s"
+    when %r|[^aeiou]+y$|
+      self.chomp("y") << "ies"
+    else
+      self << "s"
+    end
+  end
+  
+  def instance_variable_name
+    case self
+    when %r|^:@|
+      self.delete(":@")
+    when %r|^@|
+      self.delete("@")
+    else
+      self
+    end
   end
   
 end
